@@ -11,7 +11,7 @@ function Modal({ text, children }: ModalProps) {
     <>
       <Dialog>
         <DialogTrigger>
-          <Button variant="ghost" className="w-full">
+          <Button variant="ghost" className="w-full h-full">
             {text}
           </Button>
         </DialogTrigger>
