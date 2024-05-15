@@ -3,13 +3,13 @@ import Modal from './components/Modal';
 
 function App() {
   return (
-    <div className="h-screen grid grid-flow-row-dense grid-rows-3">
-      <div className="flex flex-col items-center row-span-1">
+    <div className="grid h-screen grid-flow-row grid-rows-3">
+      <div className="row-span-1 flex flex-col items-center">
         <h1 className="mt-12 text-3xl text-cyan-500 underline">Predpoveď kriminality</h1>
         <h2 className="text-lg text-cyan-700">Vybrať rok</h2>
       </div>
 
-      <div className="grid w-full grid-flow-col row-span-2 items-stretch">
+      <div className="row-span-2 grid w-full grid-flow-col items-stretch">
         <Modal text="2030">
           <DialogHeader>
             <DialogTitle>Predpoveď pre rok 2030</DialogTitle>
