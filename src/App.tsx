@@ -3,11 +3,14 @@ import Modal from './components/Modal';
 
 function App() {
   return (
-    <div className="grid h-screen grid-flow-row grid-rows-3">
-      <div className="row-span-1 flex flex-col items-center">
-        <h1 className="mt-12 text-3xl text-cyan-500 underline">Predpoveď kriminality</h1>
-        <h2 className="text-lg text-cyan-700">Vybrať rok</h2>
+    <div className="relative grid h-screen grid-flow-row grid-rows-3">
+      <div className="row-span-1 flex flex-col items-center bg-background text-foreground relative">
+ 
+  
+        <h1 className="header">PREDPOVEĎ KRIMINALITY</h1>
+        <h2 className="under">VYBRAŤ ROK</h2>
       </div>
+     
 
       <div className="row-span-2 grid w-full grid-flow-col items-stretch">
         <Modal text="2030">
@@ -23,6 +26,13 @@ function App() {
           </DialogHeader>
         </Modal>
       </div>
+      <div className="container">
+            <img
+                src="/icon.png"
+                alt="My Image"
+                className="image"
+            />
+        </div>
     </div>
   );
 }

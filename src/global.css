@@ -4,65 +4,47 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 208 100% 94%; /* Light blue */
+    --foreground: 240 10% 3.9%; /* Dark gray */
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --primary: 207 89% 64%; /* Light blue */
+    --primary-foreground: 100 0% 98%; /* White */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --secondary: 197 83% 81%; /* Light pink */
+    --secondary-foreground: 0 0% 98%; /* White */
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    --accent: 204 90% 35%; /* Light green */
+    --accent-foreground: 0 0% 98%; /* White */
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --destructive: 356 93% 51%; /* Light red */
+    --destructive-foreground: 0 0% 98%; /* White */
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --border: 66 93% 80%; /* Light gray */
+    --input: 255 255 255; /* White */
+    --ring: 240 10% 3.9%; /* Dark gray */
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 240 10% 3.9%; /* Dark gray */
+    --foreground: 0 0% 98%; /* White */
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --primary: 0 0% 98%; /* White */
+    --primary-foreground: 207 89% 64%; /* Light blue */
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%; /* Dark gray */
+    --secondary-foreground: 0 0% 98%; /* White */
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    --accent: 240 3.7% 15.9%; /* Dark gray */
+    --accent-foreground: 0 0% 98%; /* White */
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --destructive: 356 93% 51%; /* Light red */
+    --destructive-foreground: 0 0% 98%; /* White */
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 240 3.7% 15.9%; /* Dark gray */
+    --input: 240 3.7% 15.9%; /* Dark gray */
+    --ring: 240 4.9% 83.9%; /* Light gray */
   }
 }
 
@@ -73,4 +55,58 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  .hover\:primary\:hover:hover {
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--primary-foreground) / 15%);
+  }
+
+  .hover\:secondary\:hover:hover {
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--secondary-foreground) / 15%);
+  }
+
+  .hover\:accent\:hover:hover {
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--accent-foreground) / 15%);
+  }
+
+  .hover\:destructive\:hover:hover {
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--destructive-foreground) / 15%);
+  }
+}
+
+.container {
+  position: absolute;
+  width: 300px;
+  height: 225px;
+ 
+}
+
+.image {
+  position: absolute;
+  top: 10;
+  left: 10;
+  width: 100%; /* Ensure the image fills the container horizontally */
+  height: 100%; /* Ensure the image fills the container vertically */
+  object-fit: contain; /* Maintain aspect ratio while filling the container */
+}
+
+.header {
+  font-size: 36px; /* Adjust as needed */
+  font-weight: 800; /* Thicker font weight */
+  color: #333; /* Change color as needed */
+  text-align: center; /* Align the text as needed */
+  text-transform: uppercase; /* Convert text to uppercase */
+  margin-top: 15px;
+}
+
+.under {
+  font-size: 24px; /* Adjust as needed */
+  font-weight: 700;
+  color: royalblue; /* Change color as needed */
+  text-align: center; /* Align the text as needed */
 }
