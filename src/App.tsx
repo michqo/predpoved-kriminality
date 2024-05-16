@@ -32,6 +32,7 @@ const FormSchema = z.object({
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalYear, setModalYear] = useState<number>();
   
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -42,13 +43,14 @@ function App() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(`You submitted the following values: \n${JSON.stringify(data, null, 2)}`);
+    // console.log(`You submitted the following values: \n${JSON.stringify(data, null, 2)}`);
+    setModalYear(data.year)
     setModalOpen(true);
   }
 
   return (
     <>
-      <Modal open={modalOpen} onOpenChange={setModalOpen} />
+      <Modal open={modalOpen} onOpenChange={setModalOpen} year={modalYear ? modalYear : 0} />
       <div className="relative grid h-screen grid-flow-row grid-rows-3 justify-center">
         <div className="relative row-span-1 flex flex-col items-center bg-background text-foreground">
           <h1 className="mt-12 text-4xl font-extrabold text-slate-800">PREDPOVEĎ KRIMINALITY</h1>
