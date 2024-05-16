@@ -25,27 +25,6 @@
 
     --radius: 0.5rem;
   }
-
-  .dark {
-    --background: 240 10% 3.9%; /* Dark gray */
-    --foreground: 0 0% 98%; /* White */
-
-    --primary: 0 0% 98%; /* White */
-    --primary-foreground: 207 89% 64%; /* Light blue */
-
-    --secondary: 240 3.7% 15.9%; /* Dark gray */
-    --secondary-foreground: 0 0% 98%; /* White */
-
-    --accent: 240 3.7% 15.9%; /* Dark gray */
-    --accent-foreground: 0 0% 98%; /* White */
-
-    --destructive: 356 93% 51%; /* Light red */
-    --destructive-foreground: 0 0% 98%; /* White */
-
-    --border: 240 3.7% 15.9%; /* Dark gray */
-    --input: 240 3.7% 15.9%; /* Dark gray */
-    --ring: 240 4.9% 83.9%; /* Light gray */
-  }
 }
 
 @layer base {
@@ -55,58 +34,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-@layer components {
-  .hover\:primary\:hover:hover {
-    --tw-bg-opacity: 1;
-    background-color: hsl(var(--primary-foreground) / 15%);
-  }
-
-  .hover\:secondary\:hover:hover {
-    --tw-bg-opacity: 1;
-    background-color: hsl(var(--secondary-foreground) / 15%);
-  }
-
-  .hover\:accent\:hover:hover {
-    --tw-bg-opacity: 1;
-    background-color: hsl(var(--accent-foreground) / 15%);
-  }
-
-  .hover\:destructive\:hover:hover {
-    --tw-bg-opacity: 1;
-    background-color: hsl(var(--destructive-foreground) / 15%);
-  }
-}
-
-.container {
-  position: absolute;
-  width: 300px;
-  height: 225px;
- 
-}
-
-.image {
-  position: absolute;
-  top: 10;
-  left: 10;
-  width: 100%; /* Ensure the image fills the container horizontally */
-  height: 100%; /* Ensure the image fills the container vertically */
-  object-fit: contain; /* Maintain aspect ratio while filling the container */
-}
-
-.header {
-  font-size: 36px; /* Adjust as needed */
-  font-weight: 800; /* Thicker font weight */
-  color: #333; /* Change color as needed */
-  text-align: center; /* Align the text as needed */
-  text-transform: uppercase; /* Convert text to uppercase */
-  margin-top: 15px;
-}
-
-.under {
-  font-size: 24px; /* Adjust as needed */
-  font-weight: 700;
-  color: royalblue; /* Change color as needed */
-  text-align: center; /* Align the text as needed */
 }
