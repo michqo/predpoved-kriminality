@@ -28,7 +28,7 @@ function Modal({ open, onOpenChange, year, data }: ModalProps) {
             <DialogDescription>Údaje kriminality</DialogDescription>
           </DialogHeader>
           <div className="flex w-full items-center">
-            <Chart data={data} />
+            <Chart data={data} year={year} />
           </div>
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>

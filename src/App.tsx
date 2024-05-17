@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await api().data();
+      const response = await api().data('Nitriansky');
       setData(response);
     }
     fetchData();
@@ -54,7 +54,6 @@ function App() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    // console.log(`You submitted the following values: \n${JSON.stringify(data, null, 2)}`);
     setModalYear(data.year);
     setModalOpen(true);
   }

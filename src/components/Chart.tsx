@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -11,75 +11,28 @@ import {
 } from 'recharts';
 import { IData } from '../lib/types';
 
-const data = [
-  {
-    year: 2015,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2016,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2017,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2018,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2019,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2020,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2021,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2022,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2023,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2024,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2025,
-    value: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    year: 2026,
-    value: Math.floor(Math.random() * 5000) + 1000
-  }
-];
-
 interface ChartProps {
   data: IData[];
+  year: number;
 }
 
-function Chart({ data: propData }: ChartProps) {
+function Chart({ data, year }: ChartProps) {
+  const [transformedData, setTransformedData] = useState<IData[]>([]);
+  
   useEffect(() => {
-    console.log(propData);
-  }, [propData]);
+    setTransformedData(data.filter(item => item.year <= year))
+    // console.log(JSON.stringify(transformedData, null, 2));
+  }, [data, year]);
 
   return (
     <>
       <ResponsiveContainer width="100%" height={350}>
-        <LineChart data={data}>
+        <LineChart data={transformedData}>
           <XAxis dataKey="year" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip />
           <Legend />
-          <Line dataKey="value" fill="currentColor" className="fill-primary" type="monotone" />
+          <Line dataKey="crime_per_citizen" fill="currentColor" className="fill-primary" type="monotone" />
           <CartesianGrid strokeDasharray="3 3" />
         </LineChart>
       </ResponsiveContainer>
