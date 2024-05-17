@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -8,6 +9,7 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
+import { IData } from '../lib/types';
 
 const data = [
   {
@@ -60,18 +62,21 @@ const data = [
   }
 ];
 
-function Chart() {
+interface ChartProps {
+  data: IData[];
+}
+
+function Chart({ data: propData }: ChartProps) {
+  useEffect(() => {
+    console.log(propData);
+  }, [propData]);
+
   return (
     <>
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data}>
           <XAxis dataKey="year" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
-          <YAxis
-            stroke="#888888"
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
+          <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip />
           <Legend />
           <Line dataKey="value" fill="currentColor" className="fill-primary" type="monotone" />

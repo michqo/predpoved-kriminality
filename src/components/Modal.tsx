@@ -9,14 +9,16 @@ import {
   DialogTitle
 } from '@/components/ui/dialog';
 import Chart from './Chart';
+import { IData } from '@/lib/types';
 
 interface ModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   year: number;
+  data: IData[];
 }
 
-function Modal({ open, onOpenChange, year }: ModalProps) {
+function Modal({ open, onOpenChange, year, data }: ModalProps) {
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
@@ -26,7 +28,7 @@ function Modal({ open, onOpenChange, year }: ModalProps) {
             <DialogDescription>Údaje kriminality</DialogDescription>
           </DialogHeader>
           <div className="flex w-full items-center">
-            <Chart />
+            <Chart data={data} />
           </div>
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
