@@ -1,7 +1,8 @@
-interface IData {
-  region_name: string;
+interface IRegion {
+  crime_per_citizen: number;
   year: number;
-  value: number;
 }
 
-export type { IData };
+type DataShape = Record<string, IRegion[]>;
+
+export type { IRegion, DataShape };

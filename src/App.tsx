@@ -15,8 +15,8 @@ import {
 import { Input } from '@/components/ui/input';
 import Modal from './components/Modal';
 import { useEffect, useState } from 'react';
-import { api } from './lib/api';
-import { IData } from './lib/types';
+import { api, regions } from './lib/api';
+import { DataShape } from './lib/types';
 
 const FormSchema = z.object({
   year: z.coerce
@@ -35,12 +35,21 @@ const FormSchema = z.object({
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalYear, setModalYear] = useState<number>();
-  const [data, setData] = useState<IData[]>([]);
+  const [data, setData] = useState<DataShape>({});
 
   useEffect(() => {
     async function fetchData() {
-      const response = await api().data('Nitriansky');
-      setData(response);
+      const data = await Promise.all(
+        regions.map(async (region) => {
+          const response = await api().region(region);
+          return {[region]: response};
+        })
+      );
+      const transformedData = data.reduce((acc, item) => {
+        const [regionName, regionData] = Object.entries(item)[0];
+        return {...acc, [regionName]: regionData};
+      }, {});
+      setData(transformedData);
     }
     fetchData();
   }, []);

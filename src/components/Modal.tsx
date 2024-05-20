@@ -8,28 +8,34 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog';
+import { regions } from '@/lib/api';
+import { DataShape } from '@/lib/types';
 import Chart from './Chart';
-import { IData } from '@/lib/types';
 
 interface ModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   year: number;
-  data: IData[];
+  data: DataShape;
 }
 
 function Modal({ open, onOpenChange, year, data }: ModalProps) {
+  const charts = regions.map((region) => (
+    <>
+      <h1 className="mb-2 text-lg">{region} kraj</h1>
+      <Chart data={data[region]} year={year} regionName={region} />
+    </>
+  ));
+
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent>
+        <DialogContent className="h-screen min-w-full overflow-y-auto rounded-none border-0 outline-none">
           <DialogHeader>
             <DialogTitle>Predpoveď pre rok {year}</DialogTitle>
             <DialogDescription>Údaje kriminality</DialogDescription>
           </DialogHeader>
-          <div className="flex w-full items-center">
-            <Chart data={data} year={year} />
-          </div>
+          <div className="flex w-full flex-row flex-wrap items-center">{charts}</div>
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
