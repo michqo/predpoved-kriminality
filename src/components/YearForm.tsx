@@ -25,7 +25,7 @@ function YearForm({ onSubmit, form }: FormProps) {
     <>
       <div className="w-full max-w-md">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mb-5">
             <FormField
               control={form.control}
               name="year"

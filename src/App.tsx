@@ -1,3 +1,9 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,7 +15,7 @@ import { FormSchema } from './lib/schemas';
 import { DataShape } from './lib/types';
 
 function App() {
-  const [modalYear, setModalYear] = useState<number>();
+  const [modalYear, setModalYear] = useState<number>(2022);
   const [data, setData] = useState<DataShape>({});
 
   useEffect(() => {
@@ -48,10 +54,17 @@ function App() {
           <h1 className="mt-12 text-4xl font-extrabold text-slate-800">PREDPOVEĎ KRIMINALITY</h1>
           <h2 className="text-2xl font-bold text-blue-500">VYBRAŤ ROK</h2>
         </div>
-        <div className="row-span-2 flex w-screen flex-col items-center">
-          <div className="flex flex-wrap">
-            {modalYear && <Charts data={data} year={modalYear} />}
-          </div>
+        <div className="row-span-2 flex w-screen max-w-2xl gap-y-5 flex-col items-center">
+          <Accordion type="single" collapsible className='w-full'>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Údaje z regiónov</AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-wrap">
+                  {data && <Charts data={data} year={modalYear} />}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
           <YearForm onSubmit={onSubmit} form={form} />
         </div>
         <img src="/icon.png" alt="My Image" className="absolute ml-5 h-56 w-72 object-contain" />
