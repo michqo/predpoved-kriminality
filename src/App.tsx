@@ -9,14 +9,16 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import ChartsGrid from './components/ChartsGrid';
+import CombinedChart from './components/CombinedChart';
 import YearForm from './components/YearForm';
 import { api, regions } from './lib/api';
 import { FormSchema } from './lib/schemas';
-import { DataShape } from './lib/types';
+import { CombinedDataShape, RegionsDataShape } from './lib/types';
 
 function App() {
-  const [modalYear, setModalYear] = useState<number>(2022);
-  const [data, setData] = useState<DataShape>({});
+  const [selectedYear, setSelectedYear] = useState<number>(2022);
+  const [regionsData, setRegionsData] = useState<RegionsDataShape>();
+  const [combinedData, setCombinedData] = useState<CombinedDataShape>();
 
   useEffect(() => {
     async function fetchData() {
@@ -26,11 +28,24 @@ function App() {
           return { [region]: response };
         })
       );
-      const transformedData = data.reduce((acc, item) => {
+      const tempRegionsData = data.reduce((acc, item) => {
         const [regionName, regionData] = Object.entries(item)[0];
         return { ...acc, [regionName]: regionData };
       }, {});
-      setData(transformedData);
+
+      const tempCombinedData = regions.reduce<CombinedDataShape>((acc, region) => {
+        const tempRegion = tempRegionsData[region];
+        const transformedRegion = tempRegion.reduce<CombinedDataShape>((acc2, item) => {
+          return [
+            ...acc2,
+            { region: region, crime_per_citizen: item.crime_per_citizen, year: item.year }
+          ];
+        }, []);
+        return [...acc, ...transformedRegion];
+      }, []);
+
+      setRegionsData(tempRegionsData);
+      setCombinedData(tempCombinedData);
     }
     fetchData();
   }, []);
@@ -44,7 +59,7 @@ function App() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setModalYear(data.year);
+    setSelectedYear(data.year);
   }
 
   return (
@@ -55,11 +70,17 @@ function App() {
           <img src="/icon.png" alt="My Image" className="h-56 w-72 object-contain" />
         </div>
         <div className="row-span-2 flex w-screen max-w-6xl flex-col items-center gap-y-5">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" defaultValue="item-1" collapsible className="w-full">
             <AccordionItem value="item-1">
+              <AccordionTrigger>Všeobecná kriminalita</AccordionTrigger>
+              <AccordionContent>
+                {combinedData && <CombinedChart data={combinedData} year={selectedYear} />}
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
               <AccordionTrigger>Údaje z regiónov</AccordionTrigger>
               <AccordionContent>
-                {data && <ChartsGrid data={data} year={modalYear} />}
+                {regionsData && <ChartsGrid data={regionsData} year={selectedYear} />}
               </AccordionContent>
             </AccordionItem>
           </Accordion>

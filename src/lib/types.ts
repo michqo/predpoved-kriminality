@@ -3,6 +3,14 @@ interface IRegion {
   year: number;
 }
 
-type DataShape = Record<string, IRegion[]>;
+interface ICombinedRegion {
+  region: string;
+  crime_per_citizen: number;
+  year: number;
+}
 
-export type { IRegion, DataShape };
+type RegionsDataShape = Record<string, IRegion[]>;
+
+type CombinedDataShape = ICombinedRegion[];
+
+export type { CombinedDataShape, IRegion, RegionsDataShape };

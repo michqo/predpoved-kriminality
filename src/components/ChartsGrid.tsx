@@ -1,9 +1,9 @@
 import { regions } from '@/lib/api';
-import { DataShape } from '@/lib/types';
+import { RegionsDataShape } from '@/lib/types';
 import Chart from './Chart';
 
 interface ChartsProps {
-  data: DataShape;
+  data: RegionsDataShape;
   year: number;
 }
 

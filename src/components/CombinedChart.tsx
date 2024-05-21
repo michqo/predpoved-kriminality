@@ -1,3 +1,4 @@
+import { CombinedDataShape } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import {
   CartesianGrid,
@@ -8,25 +9,23 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
-import { IRegion } from '../lib/types';
 
-interface ChartProps {
-  data: IRegion[];
+interface CombinedChartProps {
+  data: CombinedDataShape;
   year: number;
-  regionName: string;
 }
 
-function Chart({ data, year }: ChartProps) {
-  const [transformedData, setTransformedData] = useState<IRegion[]>([]);
+function CombinedChart({ data, year }: CombinedChartProps) {
+  const [adjustedData, setAdjustedData] = useState<CombinedDataShape>();
 
   useEffect(() => {
-    setTransformedData(data.filter((item) => item.year <= year));
+    setAdjustedData(data.filter((item) => item.year <= year));
   }, [data, year]);
 
   return (
     <>
-      <ResponsiveContainer width="100%" height={350}>
-        <LineChart data={transformedData}>
+      <ResponsiveContainer width="100%" height={500}>
+        <LineChart data={adjustedData}>
           <XAxis dataKey="year" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip />
@@ -43,4 +42,4 @@ function Chart({ data, year }: ChartProps) {
   );
 }
 
-export default Chart;
+export default CombinedChart;
