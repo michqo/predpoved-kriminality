@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import Charts from './components/Charts';
+import ChartsGrid from './components/ChartsGrid';
 import YearForm from './components/YearForm';
 import { api, regions } from './lib/api';
 import { FormSchema } from './lib/schemas';
@@ -51,23 +51,20 @@ function App() {
     <>
       <div className="relative grid h-screen grid-flow-row grid-rows-3 justify-center">
         <div className="relative row-span-1 flex flex-col items-center bg-background text-foreground">
-          <h1 className="mt-12 text-4xl font-extrabold text-slate-800">PREDPOVEĎ KRIMINALITY</h1>
-          <h2 className="text-2xl font-bold text-blue-500">VYBRAŤ ROK</h2>
+          <h1 className="mt-6 text-4xl font-extrabold text-slate-800">PREDPOVEĎ KRIMINALITY</h1>
+          <img src="/icon.png" alt="My Image" className="h-56 w-72 object-contain" />
         </div>
-        <div className="row-span-2 flex w-screen max-w-2xl gap-y-5 flex-col items-center">
-          <Accordion type="single" collapsible className='w-full'>
+        <div className="row-span-2 flex w-screen max-w-6xl flex-col items-center gap-y-5">
+          <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger>Údaje z regiónov</AccordionTrigger>
               <AccordionContent>
-                <div className="flex flex-wrap">
-                  {data && <Charts data={data} year={modalYear} />}
-                </div>
+                {data && <ChartsGrid data={data} year={modalYear} />}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
           <YearForm onSubmit={onSubmit} form={form} />
         </div>
-        <img src="/icon.png" alt="My Image" className="absolute ml-5 h-56 w-72 object-contain" />
       </div>
     </>
   );
