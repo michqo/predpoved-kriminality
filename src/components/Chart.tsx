@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -30,10 +31,12 @@ function Chart({ data, year }: ChartProps) {
           <XAxis dataKey="year" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip />
+          <Legend />
           <Line
             dataKey="crime_per_citizen"
-            fill="currentColor"
-            className="fill-primary"
+            name='Trestné činy'
+            stroke='#3b82f6'
+            className="fill-blue-500"
             type="monotone"
           />
           <CartesianGrid strokeDasharray="3 3" />
