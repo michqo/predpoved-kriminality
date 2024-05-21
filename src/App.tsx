@@ -14,6 +14,7 @@ import YearForm from './components/YearForm';
 import { api, regions } from './lib/api';
 import { FormSchema } from './lib/schemas';
 import { CombinedDataShape, RegionsDataShape } from './lib/types';
+import InfoModal from './components/InfoModal';
 
 function App() {
   const [selectedYear, setSelectedYear] = useState<number>(2022);
@@ -58,6 +59,10 @@ function App() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+
+  }, [selectedYear])
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -77,7 +82,8 @@ function App() {
           <h1 className="mt-6 text-4xl font-extrabold text-slate-800">PREDPOVEĎ KRIMINALITY</h1>
           <img src="/icon.png" alt="My Image" className="h-56 w-72 object-contain" />
         </div>
-        <div className="row-span-2 flex w-screen max-w-6xl flex-col items-center gap-y-5">
+        <div className="row-span-2 flex w-screen max-w-6xl flex-col items-center gap-y-3">
+          {combinedData && <InfoModal year={selectedYear} combinedData={combinedData} />}
           <Accordion type="single" defaultValue="item-1" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger>Všeobecná kriminalita</AccordionTrigger>
