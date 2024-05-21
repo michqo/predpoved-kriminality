@@ -1,39 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import Modal from './components/Modal';
-import { useEffect, useState } from 'react';
+import Charts from './components/Charts';
+import YearForm from './components/YearForm';
 import { api, regions } from './lib/api';
+import { FormSchema } from './lib/schemas';
 import { DataShape } from './lib/types';
 
-const FormSchema = z.object({
-  year: z.coerce
-    .number({ required_error: 'Rok je požadovaný.', invalid_type_error: 'Rok musí byť číslo.' })
-    .positive({
-      message: 'Rok musi byt viac ako 0'
-    })
-    .min(2020, {
-      message: 'Rok musi byt aspon 2020.'
-    })
-    .max(2040, {
-      message: 'Rok musi byt najviac 2040.'
-    })
-});
-
 function App() {
-  const [modalOpen, setModalOpen] = useState(false);
   const [modalYear, setModalYear] = useState<number>();
   const [data, setData] = useState<DataShape>({});
 
@@ -42,12 +17,12 @@ function App() {
       const data = await Promise.all(
         regions.map(async (region) => {
           const response = await api().region(region);
-          return {[region]: response};
+          return { [region]: response };
         })
       );
       const transformedData = data.reduce((acc, item) => {
         const [regionName, regionData] = Object.entries(item)[0];
-        return {...acc, [regionName]: regionData};
+        return { ...acc, [regionName]: regionData };
       }, {});
       setData(transformedData);
     }
@@ -64,42 +39,20 @@ function App() {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     setModalYear(data.year);
-    setModalOpen(true);
   }
 
   return (
     <>
-      <Modal
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-        year={modalYear ? modalYear : 0}
-        data={data}
-      />
       <div className="relative grid h-screen grid-flow-row grid-rows-3 justify-center">
         <div className="relative row-span-1 flex flex-col items-center bg-background text-foreground">
           <h1 className="mt-12 text-4xl font-extrabold text-slate-800">PREDPOVEĎ KRIMINALITY</h1>
           <h2 className="text-2xl font-bold text-blue-500">VYBRAŤ ROK</h2>
         </div>
-        <div className="row-span-2 flex w-screen max-w-md flex-col">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-              <FormField
-                control={form.control}
-                name="year"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Rok</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription>Rok na predpoveď.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Vypočítať</Button>
-            </form>
-          </Form>
+        <div className="row-span-2 flex w-screen flex-col items-center">
+          <div className="flex flex-wrap">
+            {modalYear && <Charts data={data} year={modalYear} />}
+          </div>
+          <YearForm onSubmit={onSubmit} form={form} />
         </div>
         <img src="/icon.png" alt="My Image" className="absolute ml-5 h-56 w-72 object-contain" />
       </div>
