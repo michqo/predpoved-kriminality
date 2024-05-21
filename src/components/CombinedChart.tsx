@@ -2,6 +2,7 @@ import { CombinedDataShape } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -29,6 +30,7 @@ function CombinedChart({ data, year }: CombinedChartProps) {
           <XAxis dataKey="year" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip />
+          <Legend />
           <Line
             dataKey="data.Banskobystrický"
             stroke='#991b1b'
