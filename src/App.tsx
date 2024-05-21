@@ -33,19 +33,27 @@ function App() {
         return { ...acc, [regionName]: regionData };
       }, {});
 
-      const tempCombinedData = regions.reduce<CombinedDataShape>((acc, region) => {
-        const tempRegion = tempRegionsData[region];
-        const transformedRegion = tempRegion.reduce<CombinedDataShape>((acc2, item) => {
-          return [
-            ...acc2,
-            { region: region, crime_per_citizen: item.crime_per_citizen, year: item.year }
-          ];
-        }, []);
-        return [...acc, ...transformedRegion];
-      }, []);
+      const tempCombinedData = regions.reduce<Record<string, Record<string, number>>>(
+        (acc, region) => {
+          const tempRegion = tempRegionsData[region];
+          tempRegion.forEach((item) => {
+            const year = item.year;
+            if (!acc[year]) {
+              acc[year] = {};
+            }
+            acc[year][region] = item.crime_per_citizen;
+          });
+          return acc;
+        },
+        {}
+      );
+      const finalData = Object.keys(tempCombinedData).map((year) => ({
+        year: year,
+        data: tempCombinedData[year]
+      }));
 
       setRegionsData(tempRegionsData);
-      setCombinedData(tempCombinedData);
+      setCombinedData(finalData);
     }
     fetchData();
   }, []);
